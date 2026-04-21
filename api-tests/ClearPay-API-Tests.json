@@ -1,0 +1,441 @@
+{
+  "info": {
+    "_postman_id": "ece7fd25-2771-4bd2-bf8d-93260c7a95b0",
+    "name": "ClearPay-API-Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53623765",
+    "_collection_link": "https://go.postman.co/collection/53623765-ece7fd25-2771-4bd2-bf8d-93260c7a95b0?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "GET valid base currency - CAD",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response time is under 2000ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+              "});",
+              "",
+              "pm.test(\"Result is success\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.result).to.eql(\"success\");",
+              "});",
+              "",
+              "pm.test(\"Base code is CAD\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.base_code).to.eql(\"CAD\");",
+              "});",
+              "",
+              "pm.test(\"Rates object is present and not empty\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.rates).to.be.an(\"object\");",
+              "    pm.expect(Object.keys(jsonData.rates).length).to.be.above(0);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://open.er-api.com/v6/latest/CAD",
+          "protocol": "https",
+          "host": [
+            "open",
+            "er-api",
+            "com"
+          ],
+          "path": [
+            "v6",
+            "latest",
+            "CAD"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET valid base currency - USD",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response time is under 2000ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+              "});",
+              "",
+              "pm.test(\"Result is success\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.result).to.eql(\"success\");",
+              "});",
+              "",
+              "pm.test(\"Base code is USD\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.base_code).to.eql(\"USD\");",
+              "});",
+              "",
+              "pm.test(\"CAD rate is present and greater than zero\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.rates.CAD).to.be.above(0);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://open.er-api.com/v6/latest/USD",
+          "protocol": "https",
+          "host": [
+            "open",
+            "er-api",
+            "com"
+          ],
+          "path": [
+            "v6",
+            "latest",
+            "USD"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET invalid currency code - ZZZ",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response time is under 2000ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+              "});",
+              "",
+              "pm.test(\"Result is error\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.result).to.eql(\"error\");",
+              "});",
+              "",
+              "pm.test(\"Error type is present in response\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData[\"error-type\"]).to.be.a(\"string\");",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "packages": {},
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://open.er-api.com/v6/latest/ZZZ",
+          "protocol": "https",
+          "host": [
+            "open",
+            "er-api",
+            "com"
+          ],
+          "path": [
+            "v6",
+            "latest",
+            "ZZZ"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET CAD to USD rate range validation",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response time is under 2000ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+              "});",
+              "",
+              "pm.test(\"USD rate is a number\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.rates.USD).to.be.a(\"number\");",
+              "});",
+              "",
+              "pm.test(\"USD rate is greater than zero\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.rates.USD).to.be.above(0);",
+              "});",
+              "",
+              "pm.test(\"USD rate is within realistic CAD/USD range 0.50 to 0.95\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.rates.USD).to.be.within(0.50, 0.95);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://open.er-api.com/v6/latest/CAD",
+          "protocol": "https",
+          "host": [
+            "open",
+            "er-api",
+            "com"
+          ],
+          "path": [
+            "v6",
+            "latest",
+            "CAD"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET response schema validation - CAD",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response time is under 2000ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+              "});",
+              "",
+              "pm.test(\"Response contains result field\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property(\"result\");",
+              "});",
+              "",
+              "pm.test(\"Response contains base_code field\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property(\"base_code\");",
+              "});",
+              "",
+              "pm.test(\"Response contains rates field\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property(\"rates\");",
+              "});",
+              "",
+              "pm.test(\"Response contains time_last_update_utc field\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property(\"time_last_update_utc\");",
+              "});",
+              "",
+              "pm.test(\"Response does not expose unnecessary sensitive fields\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.not.have.property(\"api_key\");",
+              "    pm.expect(jsonData).to.not.have.property(\"user_id\");",
+              "    pm.expect(jsonData).to.not.have.property(\"password\");",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://open.er-api.com/v6/latest/CAD",
+          "protocol": "https",
+          "host": [
+            "open",
+            "er-api",
+            "com"
+          ],
+          "path": [
+            "v6",
+            "latest",
+            "CAD"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET multiple currency rates validation",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response time is under 2000ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+              "});",
+              "",
+              "pm.test(\"USD rate is present and positive\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.rates.USD).to.be.above(0);",
+              "});",
+              "",
+              "pm.test(\"EUR rate is present and positive\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.rates.EUR).to.be.above(0);",
+              "});",
+              "",
+              "pm.test(\"GBP rate is present and positive\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.rates.GBP).to.be.above(0);",
+              "});",
+              "",
+              "pm.test(\"CAD to CAD rate is exactly 1\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.rates.CAD).to.eql(1);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://open.er-api.com/v6/latest/CAD",
+          "protocol": "https",
+          "host": [
+            "open",
+            "er-api",
+            "com"
+          ],
+          "path": [
+            "v6",
+            "latest",
+            "CAD"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET timestamp validation - CAD",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response time is under 2000ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+              "});",
+              "",
+              "pm.test(\"time_last_update_unix is present and a number\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.time_last_update_unix).to.be.a(\"number\");",
+              "});",
+              "",
+              "pm.test(\"time_next_update_unix is present and a number\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.time_next_update_unix).to.be.a(\"number\");",
+              "});",
+              "",
+              "pm.test(\"Next update is after last update\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.time_next_update_unix).to.be.above(jsonData.time_last_update_unix);",
+              "});",
+              "",
+              "pm.test(\"Last update was within the past 48 hours\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    var now = Math.floor(Date.now() / 1000);",
+              "    var fortyEightHours = 48 * 60 * 60;",
+              "    pm.expect(now - jsonData.time_last_update_unix).to.be.below(fortyEightHours);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://open.er-api.com/v6/latest/CAD",
+          "protocol": "https",
+          "host": [
+            "open",
+            "er-api",
+            "com"
+          ],
+          "path": [
+            "v6",
+            "latest",
+            "CAD"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
