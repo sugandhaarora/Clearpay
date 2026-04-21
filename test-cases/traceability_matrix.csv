@@ -1,0 +1,32 @@
+Requirement_ID,Requirement_Description,Test_Case_IDs,Regulatory_Ref,Coverage_Status
+REQ-KYC-01,PIPEDA consent screen must appear before any PII is collected,TC-KYC-001,PIPEDA s.4.3,Covered
+REQ-KYC-02,Only necessary PII fields collected during registration,TC-KYC-002,PIPEDA s.4.4,Covered
+REQ-KYC-03,Valid unexpired government ID must be accepted for KYC,"TC-KYC-003, TC-KYC-004",FINTRAC KYC,Covered
+REQ-KYC-04,Expired government ID must be rejected,"TC-KYC-005, TC-KYC-006",FINTRAC KYC,Covered
+REQ-KYC-05,Name mismatch between form and ID must be flagged,TC-KYC-007,FINTRAC KYC,Covered
+REQ-KYC-06,Duplicate account registration must be blocked,TC-KYC-008,PIPEDA s.4.4,Covered
+REQ-KYC-07,Users under 18 must be rejected at registration,"TC-KYC-009, TC-KYC-010",,Covered
+REQ-KYC-08,Partial registration must be recoverable,TC-KYC-011,,Covered
+REQ-KYC-09,Unsupported file formats must be rejected for ID upload,TC-KYC-012,,Covered
+REQ-ETR-01,Valid e-transfer must be sent successfully,TC-ETR-001,,Covered
+REQ-ETR-02,E-transfer must fail when balance is insufficient,TC-ETR-002,,Covered
+REQ-ETR-03,E-transfer amount must be greater than zero,"TC-ETR-003, TC-ETR-004",,Covered
+REQ-ETR-04,Daily transfer limit of $3000 must be enforced,"TC-ETR-005, TC-ETR-006, TC-ETR-007, TC-ETR-015, TC-ETR-016",,Covered
+REQ-ETR-05,Transfer to unregistered recipient must be rejected,TC-ETR-008,,Covered
+REQ-ETR-06,Pending transfer must be cancellable before acceptance,"TC-ETR-009, TC-ETR-010",,Covered
+REQ-ETR-07,Memo field must handle special characters safely,TC-ETR-011,,Covered
+REQ-ETR-08,Duplicate transfers within 60 seconds must be flagged,TC-ETR-012,,Covered
+REQ-ETR-09,Completed transactions must appear in history immediately,"TC-ETR-013, TC-ETR-014",,Covered
+REQ-TXN-01,Transaction history must display correct fields,TC-TXN-001,,Covered
+REQ-TXN-02,Transaction history must be sorted newest first,TC-TXN-002,,Covered
+REQ-TXN-03,Transactions at or above $10000 must trigger FINTRAC flag,"TC-TXN-003, TC-TXN-004, TC-TXN-005",FINTRAC s.12,Covered
+REQ-FRD-01,Unusual large transfers must trigger suspicious activity flag,TC-FRD-001,FINTRAC s.7,Covered
+REQ-FRD-02,5 or more transactions within 10 minutes must trigger velocity fraud flag,TC-FRD-002,FINTRAC s.7,Covered
+REQ-SEC-01,Session must expire after 10 minutes of inactivity,"TC-SEC-001, TC-SEC-002",PIPEDA s.4.7,Covered
+REQ-SEC-02,Re-authentication required before viewing sensitive account data,TC-SEC-003,PIPEDA s.4.7,Covered
+REQ-SEC-03,Account must lock after 5 failed login attempts,"TC-SEC-004, TC-SEC-005",,Covered
+REQ-SEC-04,Concurrent sessions must not be permitted,TC-SEC-006,,Covered
+REQ-SEC-05,API responses must not expose unnecessary PII,TC-SEC-007,PIPEDA s.4.4,Covered
+REQ-SEC-06,Password field must be masked during entry,TC-SEC-008,,Covered
+REQ-SEC-07,App must not cache sensitive data after logout,TC-SEC-009,PIPEDA s.4.7,Covered
+REQ-SEC-08,Biometric authentication must work as login method,TC-SEC-010,,Covered
